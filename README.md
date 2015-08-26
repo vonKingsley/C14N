@@ -1,6 +1,6 @@
 # C14N
 
-TODO: Write a description here for library
+C14N C bindings (libxml2) for Crystal-Lang
 
 ## Installation
 
@@ -18,11 +18,11 @@ end
 require "C14N"
 ```
 
-TODO: Write usage here for library
+Usage: TBD
 
 ## Development
 
-TODO: Write instructions for development
+I need all the help I can get, I'm not a professional developer.
 
 ## Contributing
 
