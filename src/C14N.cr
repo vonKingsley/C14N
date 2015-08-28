@@ -7,9 +7,13 @@ module XML
     def initialize(@xml, @mode = LibC14N::Mode::XML_C14N_EXCLUSIVE_1_0)
     end
 
+    def self.canonicalize(@xml, @mode)
+      new(@xml, @mode).canonicalize
+    end
+
     def canonicalize()
       ctx = StringIO.new()
-      #output = LibC14N::OutputBuffer.new
+
       output_buf = LibC14N.xmlOutputBufferCreateIO(
         ->(ctx, buffer, len) {
           Box(IO).unbox(ctx).write Slice.new(buffer, len)
@@ -19,18 +23,15 @@ module XML
         Box(IO).box(ctx),
         nil
       )
-      LibC14N.xmlC14NExecute(@xml, nil, nil, @mode, nil, 0, output_buf)
-      #LibC14N.xmlC14NDocSaveTo(@xml, nil, @mode, nil, 0, output_buf)
+
+      #LibC14N.xmlC14NExecute(@xml, nil, nil, @mode, nil, 0, output_buf)
+      LibC14N.xmlC14NDocSaveTo(@xml, nil, @mode, nil, 0, output_buf)
       LibC14N.xmlOutputBufferClose(output_buf)
-      #st = String.new ctx.buffer
-      #p st
-      #p ctx.buffer.value
-      #p ctx.bytesize
-      #p output_buf.value.context
       ctx.to_s
+    end
 
-      #LibC14N.xmlC14NDocSave(@xml, nil, @mode, nil, 0, "canon.xml", 0)
-
+    def write filename
+      LibC14N.xmlC14NDocSave(@xml, nil, @mode, nil, 0, filename, 0)
     end
   end
 end
