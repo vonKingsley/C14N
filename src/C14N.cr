@@ -16,7 +16,7 @@ struct XML::Node
   end
 
   def canonicalize(io, mode = Mode::C14N_EXCLUSIVE_1_0, node_set = nil, inclusive_ns = nil, comments? = false)
-    output_buffer = cannon_buffer(io)
+    output_buffer = canonical_out_buffer(io)
     LibC14N.xmlC14NDocSaveTo(self, node_set, mode, inclusive_ns, comments?.hash, output_buffer)
     LibC14N.xmlOutputBufferClose(output_buffer)
     io
@@ -26,7 +26,7 @@ struct XML::Node
     raise NotImplementedError
   end
 
-  private def cannon_buffer(io : IO)
+  private def canonical_out_buffer(io : IO)
     ctx = io
     LibC14N.xmlOutputBufferCreateIO(
       ->(ctx, buffer, len) {
