@@ -18,7 +18,16 @@ end
 require "C14N"
 ```
 
-Usage: TBD
+```crystal
+require "C14N"
+
+xml = File.read("assertion.xml")
+doc = XML.parse(xml)
+
+#returns a string
+canonical_form = doc.canonicalize
+
+```
 
 ## Development
 
