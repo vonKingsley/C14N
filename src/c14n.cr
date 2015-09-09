@@ -1,13 +1,9 @@
-require "./C14N/*"
+require "./c14n/*"
 
 struct XML::Node
   include XML::C14N
 
-  def canonicalize()
-    canonicalize(StringIO.new).to_s
-  end
-
-  def canonicalize(io)
+  def canonicalize(io = StringIO.new)
     canonicalize(io, Mode::C14N_EXCLUSIVE_1_0, false)
   end
 
@@ -19,14 +15,17 @@ struct XML::Node
     output_buffer = canonical_out_buffer(io)
     LibC14N.xmlC14NDocSaveTo(self, node_set, mode, inclusive_ns, comments?.hash, output_buffer)
     LibC14N.xmlOutputBufferClose(output_buffer)
+    return io.to_s if io.class == StringIO
     io
   end
 
   def canonicalize!
-    raise NotImplementedError
+    canon = self.canonicalize as String
+    node = LibXML.xmlDocGetRootElement(LibXML.xmlReadMemory(canon, canon.bytesize, nil, nil, ParserOptions.default))
+    self.initialize(node)
   end
 
-  private def canonical_out_buffer(io : IO)
+  private def canonical_out_buffer(io)
     ctx = io
     LibC14N.xmlOutputBufferCreateIO(
       ->(ctx, buffer, len) {

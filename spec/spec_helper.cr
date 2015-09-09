@@ -1,2 +1,2 @@
 require "spec"
-require "../src/C14N"
+require "../src/c14n"
