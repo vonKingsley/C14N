@@ -10,7 +10,7 @@ require "./spec_helper"
       <?xml-stylesheet   href="doc.xsl"
          type="text/xsl"   ?>
         <child  z_attr="z"   d_attr="d"     v_attr="v"      b_attr="b" >data<!-- Comment 1 --></child>
-        <utf8>☠</utf8>
+        <utf8>fékàlèmùpô☠</utf8>
         <![CDATA[
           puts "random code"
         ]]>
