@@ -20,7 +20,7 @@ struct XML::Node
   end
 
   def canonicalize!
-    canon = self.canonicalize as String
+    canon = self.canonicalize.as String
     node = LibXML.xmlDocGetRootElement(LibXML.xmlReadMemory(canon, canon.bytesize, nil, nil, ParserOptions.default))
     self.initialize(node)
   end
