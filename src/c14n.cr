@@ -3,7 +3,7 @@ require "./c14n/*"
 struct XML::Node
   include XML::C14N
 
-  def canonicalize(io = MemoryIO.new)
+  def canonicalize(io = IO::Memory.new)
     canonicalize(io, Mode::C14N_EXCLUSIVE_1_0, false)
   end
 
@@ -15,7 +15,7 @@ struct XML::Node
     output_buffer = canonical_out_buffer(io)
     LibC14N.xmlC14NDocSaveTo(self, node_set, mode, inclusive_ns, comments?.hash, output_buffer)
     LibC14N.xmlOutputBufferClose(output_buffer)
-    return io.to_s if io.class == MemoryIO
+    return io.to_s if io.class == IO::Memory
     io
   end
 

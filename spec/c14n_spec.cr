@@ -56,10 +56,10 @@ describe XML::C14N do
   describe "#canonicalize!" do
     it "changes the object" do
       parsed = setup
-      puts parsed
+      #puts parsed
       parsed.canonicalize!
-      puts "\n\n"
-      puts parsed
+      #puts "\n\n"
+      #puts parsed
       parsed.should be_a(XML::Node)
     end
   end
