@@ -27,7 +27,7 @@ struct XML::Node
 
   private def canonical_out_buffer(io)
     ctx = io
-    LibC14N.xmlOutputBufferCreateIO(
+    LibXML.xmlOutputBufferCreateIO(
       ->(ctx, buffer, len) {
         Box(IO).unbox(ctx).write Slice.new(buffer, len)
         len
