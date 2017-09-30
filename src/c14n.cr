@@ -13,7 +13,8 @@ struct XML::Node
 
   def canonicalize(io, mode = Mode::C14N_EXCLUSIVE_1_0, node_set = nil, inclusive_ns = nil, comments? = false)
     output_buffer = canonical_out_buffer(io)
-    LibC14N.xmlC14NDocSaveTo(self, node_set, mode, inclusive_ns, comments?.hash, output_buffer)
+    comments = comments? ? 1 : 0
+    LibC14N.xmlC14NDocSaveTo(self, node_set, mode, inclusive_ns, comments, output_buffer)
     LibC14N.xmlOutputBufferClose(output_buffer)
     return io.to_s if io.class == IO::Memory
     io
